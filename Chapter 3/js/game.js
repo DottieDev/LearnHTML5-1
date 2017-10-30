@@ -196,12 +196,11 @@
       return false;
     }
 
-
     function getWords() {
       var phrases = [
         "The quick brown fox stopped being quick once its hunter started wearing chrome.",
         "I must win my dream boat before the snaughty Mr. Snaughtington takes it from me.",
-        "I love HTML5 because it is such an amazing platform to develop games in.",
+        "I love HTML5 because it is such an amazing platform in which to develop games.",
         "People who type fast are more likely to win at this game. Yes, that is true.",
         "For some reason, I think I can have fun while typing, and improving at the same time."
       ];
