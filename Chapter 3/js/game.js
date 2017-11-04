@@ -153,16 +153,16 @@
     }
 
     function setEnemySpeed(speed) {
-      enemy.setSpeed(speed * 23);
+      enemy.setSpeed(speed * 2);
     }
 
     function handleKeyPress(event) {
 
       var wordsLen = wordsWritten.children.length;
-      if (event.keyCode == 16)
+      if (event.keyCode == 16)  // shift
         return false;
 
-      if (event.keyCode == 8) {
+      if (event.keyCode == 8) {    //backspace
         event.preventDefault();
 
         if (wordsLen < 1)
@@ -198,11 +198,11 @@
 
     function getWords() {
       var phrases = [
-        "The quick brown fox stopped being quick once its hunter started wearing chrome.",
-        "I must win my dream boat before the snaughty Mr. Snaughtington takes it from me.",
-        "I love HTML5 because it is such an amazing platform in which to develop games.",
-        "People who type fast are more likely to win at this game. Yes, that is true.",
-        "For some reason, I think I can have fun while typing, and improving at the same time."
+        "The quick orange fox stopped being quick once its hunter started wearing chrome.",
+        "Hi. I must win my dream boat before the snaughty Mr. Snaughtington takes it from me.",
+        "Hi.I love HTML5 because it is such an amazing platform in which to develop games.",
+        "Hi. People who type fast are more likely to win at this game. Yes, that is true.",
+        "Hi.For some reason, I think I can have fun while typing, and improving at the same time."
       ];
       var rand = parseInt(Math.random() * phrases.length);
 
