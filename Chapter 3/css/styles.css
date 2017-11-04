@@ -265,7 +265,7 @@
     }
 
     .track span[data-name='badGuy'] {
-      background: url("/Chapter 3/img/bad-guy-icon.png") no-repeat;
+      background: url("../img/bad-guy-icon.png") no-repeat;
      
     }
 
