@@ -9,7 +9,7 @@
 
   <header>
 
-    <h1>Where in the world is Fredericka the Great?</h1>
+    <h1>Who in the world is Fredericka the Great?</h1>
 
     <nav id="navOptions">
       <div>
@@ -50,10 +50,15 @@
       </header>
       <section class="closed">
         <form>
-          <input type="text" name="fullName" pattern="\w{2,16}\s\w{2,16}" placeholder="Full Name (Ex: John Doe)" autofocus />
-          <input type="email" name="email" placeholder="Email address" />
+          <input type="text" name="fullName" pattern="\w{2,16}\s\w{2,16}" placeholder="Full Name (Ex: John Doe)" autofocus required />
+          <input type="email" name="email" placeholder="Email address" required />
+          <p><label for="scheduleDate">Schedule Next Game:</label><input type="date" name="scheduleDate" />
+            <label for="faveColor">Favorite Color?</label><input type="color" name="faveColor" value="blue" />
+            <input type="number" name="credits" min="2" max="20" step="2" placeholder="Even number between 2 and 20/>
+            </p>
+          <input type="search" name="newSearch" placeholder="Search"/>
           <input type="submit" value="Save" />
-        </form>
+         </form>
 
         <ul></ul>
 
@@ -64,7 +69,7 @@
 
   </section>
 
- <script src="js/game.js"></script>
+  <script src="js/game.js"></script>
 
 </body>
 
