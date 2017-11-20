@@ -1,41 +1,31 @@
 <!doctype html>
 <html>
-<head>
-<title>HMTL5 Jelly Gravity Game by Rodrigo Silveira</title>
-<meta charset="utf-8" />
-<meta name="description" content="A prototype for an HTML5 game I'm working on. Proof of concept for chapter 4 of the book I'm writing for Packt Publishing: Learn HTML5 by Making Fun Games." />
 
-<link rel="stylesheet" href="css/style.css" />
+<head>
+    <title>HMTL5 Jelly Gravity Game by Rodrigo Silveira</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="A prototype for an HTML5 game I'm working on. Proof of concept for chapter 4 of the book I'm writing for Packt Publishing: Learn HTML5 by Making Fun Games." />
+
+    <link rel="stylesheet" href="css/style.css" />
 
 </head>
+
 <body>
 
-<div class="health-bar"><span></span></div>
+    <div class="health-bar"><span></span></div>
 
-<h1 id="message"></h1>
+    <h1 id="message"></h1>
 
-<div id="table"></div>
-<div id="bowl"></div>
-<div id="bowl-top-faux-target"></div>
-<div id="bowl-top" class="dragging-icon bowl-closed" draggable="true" ondragstart="doOnDragStart(event)" ondragend="doOnDragEnd(event)"></div>
-<div id="bowl-top-target" ondrop="startGame()" ondragover="doOnDragOver(event)" ondragleave="doOnDragLeave(event)"></div>
+    <div id="table"></div>
+    <div id="bowl"></div>
+    <div id="bowl-top-faux-target"></div>
+    <div id="bowl-top" class="dragging-icon bowl-closed" draggable="true" ondragstart="doOnDragStart(event)" ondragend="doOnDragEnd(event)"></div>
+    <div id="bowl-top-target" ondrop="startGame()" ondragover="doOnDragOver(event)" ondragleave="doOnDragLeave(event)"></div>
 
-<div class="dom-recs">
+    <div class="dom-recs">
 
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 225 436"
-   class="dude-svg"
-   version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="dude.svg">
+        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+            xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 225 436" class="dude-svg" version="1.1" inkscape:version="0.48.4 r9939" sodipodi:docname="dude.svg">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -192,23 +182,9 @@
   </g>
 </svg>
 
-
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   class="jelly-model"
-   viewBox="0 0 600 215"
-   version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="jelly-red.svg"
-   style="enable-background:new">
+        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" class="jelly-model" viewBox="0 0 600 215" version="1.1" inkscape:version="0.48.4 r9939" sodipodi:docname="jelly-red.svg"
+            style="enable-background:new">
   <g
      inkscape:groupmode="layer"
      class="splash"
@@ -318,10 +294,10 @@
   </g>
 </svg>
 
+    </div>
 
-</div>
-
-<script src="js/game.js"></script>
+    <script src="js/game.js"></script>
 
 </body>
+
 </html>

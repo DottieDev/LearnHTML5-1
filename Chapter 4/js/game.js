@@ -2,12 +2,12 @@
 // Jelly class 
 //   Represent a jelly object with its basic behavior
 // ------------------------------------------------------------
-var Jelly = function(el, x, y, dx, dy){
+var Jelly = function(el, x, y, dx, dy) {
 
    var el = el;
    el.style.left = x + "px";
    el.style.top = y + "px";
-   el.pos = {x: x, y: y};
+   el.pos = { x: x, y: y };
    el.dx = dx;
    el.dy = dy;
    el.xdir = parseInt(Math.random() * 2) % 2 == 0 ? 1 : -1;
@@ -18,11 +18,11 @@ var Jelly = function(el, x, y, dx, dy){
    var MAX_VY = 15;
    var isFree = false;
 
-   function jump(){
+   function jump() {
       vy = 0 - (parseInt(Math.random() * 5) + 25);
    }
 
-   function move(){
+   function move() {
       el.pos.x = el.pos.x + el.dx * el.xdir;
       el.pos.y = el.pos.y + el.dy + vy * gravity;
 
@@ -34,40 +34,40 @@ var Jelly = function(el, x, y, dx, dy){
          vy = MAX_VY;
    }
 
-   function getY(){
+   function getY() {
       return el.pos.y;
    }
 
-   function getX(){
+   function getX() {
       return el.pos.x;
    }
 
-   function getHeight(){
+   function getHeight() {
       return el.offsetHeight;
    }
 
-   function getWidth(){
+   function getWidth() {
       return el.offsetWidth;
    }
 
-   function setY(y){
+   function setY(y) {
       el.pos.y = y;
       el.style.top = y + "px";
    }
 
-   function changeXDir(){
+   function changeXDir() {
       el.xdir *= -1;
    }
 
-   function remove(){
+   function remove() {
       el.remove();
    }
 
-   function isInPlay(){
+   function isInPlay() {
       return el.isInPlay;
    }
 
-   function setInPlay(inPlay){
+   function setInPlay(inPlay) {
       el.isInPlay = inPlay;
    }
 
@@ -92,15 +92,13 @@ var Jelly = function(el, x, y, dx, dy){
    };
 };
 
-
 // ------------------------------------------------------------
 // Sound Effects class
 //    Register multiple sound entities and control the playback of each.
 // ------------------------------------------------------------
 var SoundFx = function() {
    // Every sound entity will be stored here for future use
-   var sounds = {};
-
+   var sounds = {}
    // ------------------------------------------------------------
    // Register a new sound entity with some basic configurations
    // ------------------------------------------------------------
@@ -133,7 +131,7 @@ var SoundFx = function() {
          return fadeOut(name, 1.0, speed, inOut);
 
       if (fadeTo < 0.000)
-          return fadeOut(name, 0.0, speed, inOut);
+         return fadeOut(name, 0.0, speed, inOut);
 
       var newVolume = parseFloat(sounds[name].volume + 0.01 * inOut);
 
@@ -143,7 +141,7 @@ var SoundFx = function() {
       sounds[name].volume = newVolume;
 
       if (sounds[name].volume > fadeTo)
-        setTimeout(function(){ fadeOut(name, fadeTo, speed, inOut); }, speed);
+         setTimeout(function() { fadeOut(name, fadeTo, speed, inOut); }, speed);
       else
          sounds[name].volume = parseFloat(fadeTo);
 
@@ -176,7 +174,6 @@ var SoundFx = function() {
    };
 };
 
-
 // Hold every sound effect in the same object for easy access
 var sounds = new SoundFx();
 sounds.add("background", "sound/techno-loop-2.mp3", true, true);
@@ -195,16 +192,15 @@ var isPlaying = false;
 var gameTimer = null;
 
 var bowl = document.querySelector("#bowl");
-var bowlTop = new Image();//document.createElement("img");
+var bowlTop = new Image(); //document.createElement("img");
 bowlTop.isReady = false;
 
-bowlTop.onload = function(){
+bowlTop.onload = function() {
    bowlTop.width = "168";
    bowlTop.isReady = true;
 }
 
 bowlTop.src = "img/bowl-top.png";
-
 
 var jellyModel = document.querySelector(".jelly-model");
 var jellies = [];
@@ -217,8 +213,8 @@ health.sickLevel = 100;
 
 var dude = document.querySelector(".dude-svg").cloneNode(true);
 dude.isDead = false;
-dude.isMoving = {left: false, right: false};
-dude.pos = {x : 0, moveBy : 11.75};
+dude.isMoving = { left: false, right: false };
+dude.pos = { x: 0, moveBy: 11.75 };
 document.body.appendChild(dude);
 
 // ------------------------------------------------------------
@@ -231,6 +227,9 @@ function startGame() {
       document.body.addEventListener("keyup", doOnKeyUp);
       document.body.addEventListener("keydown", doOnKeyDown);
       dude.pos.x = dude.offsetLeft;
+      //DCL: the above starting position was causing a bug where the dude wouldn't move at all in response to arrow keys!
+      //     added the following line to test with a different starting position; this does let the dude move!
+      dude.pos.x = dude.getBoundingClientRect().left;
 
       var bowlTop = document.querySelector("#bowl-top");
       bowlTop.classList.remove("bowl-closed");
@@ -274,9 +273,9 @@ function newJelly() {
    jellyEntity.classList.add("jelly-svg-on");
    jellyEntity.classList.add("jelly-svg-" + colors[randColor]);
 
-   var jelly = new Jelly(jellyEntity, bowl.offsetLeft + 10, bowl.offsetTop - 40, 
-                         parseInt(Math.random() * 6) * 2.75, 
-                         parseInt(Math.random() * 7) * 1.5);
+   var jelly = new Jelly(jellyEntity, bowl.offsetLeft + 10, bowl.offsetTop - 40,
+      parseInt(Math.random() * 6) * 2.75,
+      parseInt(Math.random() * 7) * 1.5);
 
 
    // If there's already too many jelly entities in the game,
@@ -305,7 +304,8 @@ function tick() {
       if (dude.isMoving.right) {
          if (dude.pos.x + dude.offsetWidth + 10 > document.body.offsetWidth) {
             dude.pos.x = document.body.offsetWidth - dude.offsetWidth;
-         } else {
+         }
+         else {
             dude.pos.x += dude.pos.moveBy;
             dude.style.left = dude.pos.x + "px";
          }
@@ -315,7 +315,8 @@ function tick() {
       if (dude.isMoving.left) {
          if (dude.pos.x < 425) {
             dude.pos.x = 425;
-         } else {
+         }
+         else {
             dude.pos.x -= dude.pos.moveBy;
             dude.style.left = dude.pos.x + "px";
          }
@@ -331,11 +332,16 @@ function tick() {
          continue;
 
       // If the hero is still alive, check if this jelly is by his head
+      var dudeBox = dude.getBoundingClientRect(); //Added
       if (!dude.isDead) {
-         if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dude.offsetTop &&
-             jellies[i].getY() < dude.offsetTop + 100 &&
-             jellies[i].getX() + 40 < dude.offsetLeft + dude.offsetWidth &&
-             jellies[i].getX() - 40 + jellies[i].getWidth() > dude.offsetLeft) {
+         // if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dude.offsetTop &&
+         //    jellies[i].getY() < dude.offsetTop + 100 &&
+         //    jellies[i].getX() + 40 < dude.offsetLeft + dude.offsetWidth &&
+         //    jellies[i].getX() - 40 + jellies[i].getWidth() > dude.offsetLeft) {
+         if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dudeBox.top &&
+            jellies[i].getY() < dudeBox.top + 100 &&
+            jellies[i].getX() + 40 < dudeBox.left + dudeBox.width &&
+            jellies[i].getX() - 40 + jellies[i].getWidth() > dudeBox.left) {
 
             sounds.play("hit");
             getSick();
@@ -360,16 +366,18 @@ function tick() {
       if (stillFalling) {
          jellies[i].move();
 
-      // If it has hit the floor, update the sprite, play a sound effect, and take the jelly out of play
-      } else {
+         // If it has hit the floor, update the sprite, play a sound effect, and take the jelly out of play
+      }
+      else {
          if (jellies[i].getX() > 400) {
             jellies[i].setY(document.body.offsetHeight - jellies[i].getHeight() - 75);
             jellies[i].swapClass("jelly-svg-on", "jelly-svg-off");
             jellies[i].setInPlay(false);
             sounds.play("splash");
 
-         // If the jelly is close to the table, let it move out of the screen
-         } else {
+            // If the jelly is close to the table, let it move out of the screen
+         }
+         else {
             jellies[i].move();
          }
       }
@@ -387,7 +395,8 @@ function tick() {
       if (parseInt(Math.random() * 100) == 7) {
          newJelly();
       }
-   } else {
+   }
+   else {
       if (parseInt(Math.random() * 100) % 45 == 0) {
          newJelly();
       }
@@ -414,7 +423,7 @@ function getSick() {
       sounds.fadeOut("bounce", 0.1, 10);
 
       sounds.play("game-over");
-      
+
 
       document.body.removeEventListener("keyup", doOnKeyUp);
       document.body.removeEventListener("keydown", doOnKeyDown);
@@ -434,34 +443,63 @@ function getSick() {
 // ------------------------------------------------------------
 // 
 // ------------------------------------------------------------
-function doOnKeyDown(event){
+function doOnKeyDown(event) {
    switch (event.which) {
 
-   case 39: /* Right */
-     dude.isMoving.right = true;
-   break;
+      case 39:
+         /* Right */
+         dude.isMoving.right = true;
+         break;
 
-   case 37: /* Left */
-     dude.isMoving.left = true;
-   break;
+      case 37:
+         /* Left */
+         dude.isMoving.left = true;
+         break;
    }
+   // switch (event.key) {
+
+   //    case "ArrowRight":
+   //       /* Right */
+   //       dude.isMoving.right = true;
+   //       break;
+
+   //    case "ArrowLeft":
+   //       /* Left */
+   //       dude.isMoving.left = true;
+   //       break;
+   // }
 }
 
 
 // ------------------------------------------------------------
 // 
 // ------------------------------------------------------------
-function doOnKeyUp(event){
+function doOnKeyUp(event) {
    switch (event.which) {
 
-   case 39: /* Right */
-     dude.isMoving.right = false;
-   break;
+      case 39:
+         /* Right */
+         dude.isMoving.right = false;
+         break;
 
-   case 37: /* Left */
-     dude.isMoving.left = false;
-   break;
+      case 37:
+         /* Left */
+         dude.isMoving.left = false;
+         break;
    }
+
+   // switch (event.key) {
+
+   //    case "ArrowRight":
+   //       /* Right */
+   //       dude.isMoving.right = false;
+   //       break;
+
+   //    case "ArrowLeft":
+   //       /* Left */
+   //       dude.isMoving.left = false;
+   //       break;
+   // }
 }
 
 
