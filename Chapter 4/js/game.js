@@ -42,12 +42,28 @@ var Jelly = function(el, x, y, dx, dy) {
       return el.pos.x;
    }
 
+   // DCL: the getHeight function was returning "undefined" because el is an SVG element 
+   //     and does not have an offsetHeight or an offsetWidth.
+   //     Modified to first get the bounding rectangle and return its height
    function getHeight() {
-      return el.offsetHeight;
+      //return el.offsetHeight;   //original code doesn't work! No such property for SVG element
+      var jellyBox = el.getBoundingClientRect();
+      //Console logging was used to help identify the bug. The first line below causes an error
+      //console.log("Jelly Height" + el.offsetHeight);
+      //console.log("Jelly Height" + (jellyBox.bottom - jellyBox.top));
+      return jellyBox.height;
    }
 
+   // DCL: the getWidth function wasreturning "undefined" because el is an SVG element 
+   //     and does not have an offsetHeight or an offsetWidth.
+   //     Modified function to first get the bounding rectangle and return its width
    function getWidth() {
-      return el.offsetWidth;
+      //return el.offsetWidth;  //original code doesn't work! No such property for SVG element
+      var jellyBox = el.getBoundingClientRect();
+      //Console logging was used to help identify the bug. The first line below causes an error
+      //console.log("Jelly Width: " + el.offsetWidth);
+      //console.log("Jelly Width: " + (jellyBox.right - jellyBox.left));
+      return jellyBox.width;
    }
 
    function setY(y) {
@@ -226,9 +242,10 @@ function startGame() {
 
       document.body.addEventListener("keyup", doOnKeyUp);
       document.body.addEventListener("keydown", doOnKeyDown);
-      dude.pos.x = dude.offsetLeft;
-      //DCL: the above starting position was causing a bug where the dude wouldn't move at all in response to arrow keys!
-      //     added the following line to test with a different starting position; this does let the dude move!
+      //dude.pos.x = dude.offsetLeft;
+      // DCL: the above line to establish starting position was causing a bug where the dude wouldn't move at all in response to arrow keys!
+      //     Debugger revealed the offsetLeft is undefined for the dude; it turns out that an SVG element does not have the offsetLeft property
+      //     Added the following line to get the left value for the dude; this does let the dude move!
       dude.pos.x = dude.getBoundingClientRect().left;
 
       var bowlTop = document.querySelector("#bowl-top");
