@@ -349,6 +349,12 @@ function tick() {
          continue;
 
       // If the hero is still alive, check if this jelly is by his head
+      // DCL: the collision check was never detecting a collision; debugging revealed that the values  of dude.offsetTop and dude.offsetLeft used in
+      //      the calculation are undefined. This is because an SVG element does not have the offsetTop or offsetLeft properties.
+      //      To fix it, use the getBoundingClientRect function to determine the container size for the dude. 
+      //      Modify the "if" statement using the dimensions of the bounding rectangle ("dudeBox" instead of the SVG graphic ("dude").
+      //      Further debugging revealed that the jellie[i].getHeight and .getWidth were likewise returning "undefined" for the same reason.
+      //      See the revisions in the Jelly function to fix this.
       var dudeBox = dude.getBoundingClientRect(); //Added
       if (!dude.isDead) {
          // if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dude.offsetTop &&
