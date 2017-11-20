@@ -318,9 +318,14 @@ function tick() {
    if (!dude.isDead) {
 
       // Move dude to the right
+      // DCL:  offsetWidth is not a valid property of an SVG element, so dude.offsetWidth is undefined;
+      //       modified to use the width of the containing box instead
+      var dudeBox = dude.getBoundingClientRect();
       if (dude.isMoving.right) {
-         if (dude.pos.x + dude.offsetWidth + 10 > document.body.offsetWidth) {
-            dude.pos.x = document.body.offsetWidth - dude.offsetWidth;
+         //if (dude.pos.x + dude.offsetWidth + 10 > document.body.offsetWidth) {
+         // dude.pos.x = document.body.offsetWidth - dude.offsetWidth;
+         if (dude.pos.x + dudeBox.width + 10 > document.body.offsetWidth) {
+            dude.pos.x = document.body.offsetWidth - dudeBox.width;
          }
          else {
             dude.pos.x += dude.pos.moveBy;
@@ -383,7 +388,7 @@ function tick() {
       }
 
       // Determine if a jelly has already hit the floor
-      stillFalling = jellies[i].getY() + jellies[i].getHeight() * 2.5 < document.body.offsetHeight;
+      var stillFalling = jellies[i].getY() + jellies[i].getHeight() * 2.5 < document.body.offsetHeight;
 
       // If it hasn't hit the floor, let gravity move it down
       if (stillFalling) {
