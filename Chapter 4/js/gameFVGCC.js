@@ -42,12 +42,30 @@ var Jelly = function(el, x, y, dx, dy) {
       return el.pos.x;
    }
 
+   /* FVGCC: the getHeight function was returning "undefined" because el is an SVG element 
+        and does not have an offsetHeight or an offsetWidth.
+        Modified to first get the bounding rectangle and return its height
+   */
    function getHeight() {
-      return el.offsetHeight;
+      //return el.offsetHeight;   //original code doesn't work! No such property for SVG element
+      var jellyBox = el.getBoundingClientRect();
+      //Console logging was used to help identify the bug. The first line below causes an error
+      //console.log("Jelly Height" + el.offsetHeight);
+      //console.log("Jelly Height" + (jellyBox.bottom - jellyBox.top));
+      return jellyBox.height;
    }
 
+   /* FVGCC: the getWidth function wasreturning "undefined" because el is an SVG element 
+          and does not have an offsetHeight or an offsetWidth.
+          Modified function to first get the bounding rectangle and return its width
+   */
    function getWidth() {
-      return el.offsetWidth;
+      //return el.offsetWidth;  //original code doesn't work! No such property for SVG element
+      var jellyBox = el.getBoundingClientRect();
+      //Console logging was used to help identify the bug. The first line below causes an error
+      //console.log("Jelly Width: " + el.offsetWidth);
+      //console.log("Jelly Width: " + (jellyBox.right - jellyBox.left));
+      return jellyBox.width;
    }
 
    function setY(y) {
@@ -92,15 +110,13 @@ var Jelly = function(el, x, y, dx, dy) {
    };
 };
 
-
 // ------------------------------------------------------------
 // Sound Effects class
 //    Register multiple sound entities and control the playback of each.
 // ------------------------------------------------------------
 var SoundFx = function() {
    // Every sound entity will be stored here for future use
-   var sounds = {};
-
+   var sounds = {}
    // ------------------------------------------------------------
    // Register a new sound entity with some basic configurations
    // ------------------------------------------------------------
@@ -176,7 +192,6 @@ var SoundFx = function() {
    };
 };
 
-
 // Hold every sound effect in the same object for easy access
 var sounds = new SoundFx();
 sounds.add("background", "sound/techno-loop-2.mp3", true, true);
@@ -205,7 +220,6 @@ bowlTop.onload = function() {
 
 bowlTop.src = "img/bowl-top.png";
 
-
 var jellyModel = document.querySelector(".jelly-model");
 var jellies = [];
 var MAX_JELLIES = 50;
@@ -230,7 +244,12 @@ function startGame() {
 
       document.body.addEventListener("keyup", doOnKeyUp);
       document.body.addEventListener("keydown", doOnKeyDown);
-      dude.pos.x = dude.offsetLeft;
+      //dude.pos.x = dude.offsetLeft;
+      /* FVGCC: the above line to establish starting position was causing a bug where the dude wouldn't move at all in response to arrow keys!
+            Debugger revealed the offsetLeft is undefined for the dude; it turns out that an SVG element does not have the offsetLeft property
+            Added the following line to get the left value for the dude; this does let the dude move!
+      */
+      dude.pos.x = dude.getBoundingClientRect().left;
 
       var bowlTop = document.querySelector("#bowl-top");
       bowlTop.classList.remove("bowl-closed");
@@ -302,9 +321,15 @@ function tick() {
    if (!dude.isDead) {
 
       // Move dude to the right
+      /* FVGCC:  offsetWidth is not a valid property of an SVG element, so dude.offsetWidth is undefined;
+                 modified to use the width of the containing box instead
+      */
+      var dudeBox = dude.getBoundingClientRect();
       if (dude.isMoving.right) {
-         if (dude.pos.x + dude.offsetWidth + 10 > document.body.offsetWidth) {
-            dude.pos.x = document.body.offsetWidth - dude.offsetWidth;
+         //if (dude.pos.x + dude.offsetWidth + 10 > document.body.offsetWidth) {
+         // dude.pos.x = document.body.offsetWidth - dude.offsetWidth;
+         if (dude.pos.x + dudeBox.width + 10 > document.body.offsetWidth) {
+            dude.pos.x = document.body.offsetWidth - dudeBox.width;
          }
          else {
             dude.pos.x += dude.pos.moveBy;
@@ -333,11 +358,23 @@ function tick() {
          continue;
 
       // If the hero is still alive, check if this jelly is by his head
+      /* FVGCC: the collision check was never detecting a collision; debugging revealed that the values  of dude.offsetTop and dude.offsetLeft used in
+               the calculation are undefined. This is because an SVG element does not have the offsetTop or offsetLeft properties.
+               To fix it, use the getBoundingClientRect function to determine the container size for the dude. 
+               Modify the "if" statement using the dimensions of the bounding rectangle ("dudeBox" instead of the SVG graphic ("dude").
+               Further debugging revealed that the jellie[i].getHeight and .getWidth were likewise returning "undefined" for the same reason.
+               See the revisions in the Jelly function to fix this.
+       */
+      var dudeBox = dude.getBoundingClientRect(); //Added
       if (!dude.isDead) {
-         if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dude.offsetTop &&
-            jellies[i].getY() < dude.offsetTop + 100 &&
-            jellies[i].getX() + 40 < dude.offsetLeft + dude.offsetWidth &&
-            jellies[i].getX() - 40 + jellies[i].getWidth() > dude.offsetLeft) {
+         // if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dude.offsetTop &&
+         //    jellies[i].getY() < dude.offsetTop + 100 &&
+         //    jellies[i].getX() + 40 < dude.offsetLeft + dude.offsetWidth &&
+         //    jellies[i].getX() - 40 + jellies[i].getWidth() > dude.offsetLeft) {
+         if (jellies[i].getY() + jellies[i].getHeight() - 20 >= dudeBox.top &&
+            jellies[i].getY() < dudeBox.top + 100 &&
+            jellies[i].getX() + 40 < dudeBox.left + dudeBox.width &&
+            jellies[i].getX() - 40 + jellies[i].getWidth() > dudeBox.left) {
 
             sounds.play("hit");
             getSick();
@@ -356,7 +393,7 @@ function tick() {
       }
 
       // Determine if a jelly has already hit the floor
-      stillFalling = jellies[i].getY() + jellies[i].getHeight() * 2.5 < document.body.offsetHeight;
+      var stillFalling = jellies[i].getY() + jellies[i].getHeight() * 2.5 < document.body.offsetHeight;
 
       // If it hasn't hit the floor, let gravity move it down
       if (stillFalling) {
@@ -452,6 +489,18 @@ function doOnKeyDown(event) {
          dude.isMoving.left = true;
          break;
    }
+   // switch (event.key) {
+
+   //    case "ArrowRight":
+   //       /* Right */
+   //       dude.isMoving.right = true;
+   //       break;
+
+   //    case "ArrowLeft":
+   //       /* Left */
+   //       dude.isMoving.left = true;
+   //       break;
+   // }
 }
 
 
@@ -471,6 +520,19 @@ function doOnKeyUp(event) {
          dude.isMoving.left = false;
          break;
    }
+
+   // switch (event.key) {
+
+   //    case "ArrowRight":
+   //       /* Right */
+   //       dude.isMoving.right = false;
+   //       break;
+
+   //    case "ArrowLeft":
+   //       /* Left */
+   //       dude.isMoving.left = false;
+   //       break;
+   // }
 }
 
 
