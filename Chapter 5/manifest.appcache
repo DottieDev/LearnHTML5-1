@@ -1,14 +1,16 @@
 CACHE MANIFEST
 
-# HTML5 Snake, Version 1.0.0
+# HTML5 Snake, Version 1.0.1
 
 CACHE:
 index.html
 js/next-empty.worker.js
 js/renderer.class.js
 js/snake.class.js
+js/game.js
 img/block-green.png
 img/fruit-01.png
+img/plane.jpg
 fonts/geo.woff
 fonts/vt323.woff
 css/style.css

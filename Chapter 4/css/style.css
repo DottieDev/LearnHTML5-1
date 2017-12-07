@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
    width: 100%;
    height: 100%;
    margin: 0;
@@ -73,7 +74,8 @@ html, body {
    display: none;
 }
 
-.jelly-svg, .block {
+.jelly-svg,
+.block {
    position: absolute;
    left: -1000px;
    top: -1000px;
@@ -160,11 +162,13 @@ html, body {
    fill: #ff3;
 }
 
-.jelly-svg-off g.jelly-block, .jelly-svg-on g.splash {
+.jelly-svg-off g.jelly-block,
+.jelly-svg-on g.splash {
    display: none;
 }
 
-.jelly-svg-off g.splash, .jelly-svg-on g.jelly-block {
+.jelly-svg-off g.splash,
+.jelly-svg-on g.jelly-block {
    display: block;
 }
 
@@ -187,3 +191,17 @@ html, body {
 
    -webkit-transform: rotate3d(7, 3, 3, -3320deg);
 }
+
+.moveButton {
+   width: 100px;
+   height: 20px;
+   background-color: blue;
+   color: white;
+   margin-top: 100px;
+}
+
+#rightArrow {
+   float: right;
+}
+
+#leftArrow {}

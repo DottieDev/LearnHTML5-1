@@ -230,7 +230,8 @@ function startGame() {
 
       document.body.addEventListener("keyup", doOnKeyUp);
       document.body.addEventListener("keydown", doOnKeyDown);
-      dude.pos.x = dude.offsetLeft;
+      //dude.pos.x = dude.offsetLeft;
+      dude.pos.x = dude.getBoundingClientRect().left;
 
       var bowlTop = document.querySelector("#bowl-top");
       bowlTop.classList.remove("bowl-closed");
