@@ -7,9 +7,11 @@ document.body.appendChild(canvas);
 
 var renderer = new Renderer(canvas);
 var renderTime = {
-   last: 0, 
-   now: 0, 
-   fps: 1000 / 30
+   last: 0,
+   now: 0,
+   //FVGCC: changed fps calculation to slow it down!
+   // fps: 1000 / 30
+   fps: 10000 / 30
 };
 
 var snake = new Snake(0, 0, canvas.width, canvas.height, 1000);
@@ -78,6 +80,8 @@ var gameMenu = {
    },
    play: function() {
       renderer.clear();
+      //FVGCC: added a plane graphic to the background
+      canvas.style.background = "url('img/plane.jpg')";
       score.reset();
       fruit.reset();
       clearEvent("eat");
@@ -116,7 +120,8 @@ function gameLoop() {
                width: worldWidth,
                height: worldHeight
             });
-         } else {
+         }
+         else {
 
             snake.move();
             head = snake.getHead();
@@ -146,7 +151,8 @@ function gameLoop() {
       renderer.draw(fruit.position, fruit.img);
       renderer.draw(snake.getBody(), snake.getSkin());
       requestAnimationFrame(gameLoop);
-   } else {
+   }
+   else {
       gameMenu.setText("Game Over", "Play Again");
       gameMenu.show();
       document.body.removeEventListener("keydown", snake.doOnKeyDown);
@@ -205,9 +211,9 @@ function saveEvent(event, snake, fruit) {
    var eventObj = sessionStorage.getItem(event);
 
    // If this is the first time the event is set, create its structure
-   if (!eventObj)  {
+   if (!eventObj) {
       eventObj = {
-         snake: new Array(), 
+         snake: new Array(),
          fruit: new Array()
       };
 
@@ -215,7 +221,8 @@ function saveEvent(event, snake, fruit) {
       eventObj.fruit.push(fruit);
       eventObj = JSON.stringify(eventObj);
       sessionStorage.setItem(event, eventObj);
-   } else {
+   }
+   else {
       eventObj = JSON.parse(eventObj);
       eventObj.snake.push(snake);
       eventObj.fruit.push(fruit);
@@ -238,10 +245,12 @@ function setHighScore(newScore) {
       if (newScore > element.textContent * 1) {
          localStorage.setItem("high-score", newScore);
          element.textContent = newScore;
-      } else {
+      }
+      else {
          element.textContent = score;
       }
-   } else {
+   }
+   else {
       localStorage.setItem("high-score", newScore);
       element.textContent = newScore;
    }
@@ -255,8 +264,7 @@ function setHighScore(newScore) {
 
    setHighScore(0);
 
-   setTimeout(function(){
+   setTimeout(function() {
       gameMenu.show();
    }, 1000);
 })();
- 

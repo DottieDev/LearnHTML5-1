@@ -39,11 +39,14 @@ var Snake = function(x, y, width, height, maxSize) {
 
       if (dir[keys.UP]) {
          body[1]--;
-      } else if (dir[keys.DOWN]) {
+      }
+      else if (dir[keys.DOWN]) {
          body[1]++;
-      } else if (dir[keys.LEFT]) {
+      }
+      else if (dir[keys.LEFT]) {
          body[0]--;
-      } else if (dir[keys.RIGHT]) {
+      }
+      else if (dir[keys.RIGHT]) {
          body[0]++;
       }
    };
@@ -62,21 +65,24 @@ var Snake = function(x, y, width, height, maxSize) {
          dir[keys.RIGHT] = false;
 
          return;
-      } else if (key == keys.DOWN && !dir[keys.UP]) {
+      }
+      else if (key == keys.DOWN && !dir[keys.UP]) {
          dir[keys.UP] = false;
          dir[keys.DOWN] = true;
          dir[keys.LEFT] = false;
          dir[keys.RIGHT] = false;
 
          return;
-      } else if (key == keys.LEFT && !dir[keys.RIGHT]) {
+      }
+      else if (key == keys.LEFT && !dir[keys.RIGHT]) {
          dir[keys.UP] = false;
          dir[keys.DOWN] = false;
          dir[keys.LEFT] = true;
          dir[keys.RIGHT] = false;
 
          return;
-      } else if (key == keys.RIGHT && !dir[keys.LEFT]) {
+      }
+      else if (key == keys.RIGHT && !dir[keys.LEFT]) {
          dir[keys.UP] = false;
          dir[keys.DOWN] = false;
          dir[keys.LEFT] = false;
@@ -117,7 +123,7 @@ var Snake = function(x, y, width, height, maxSize) {
    };
 
    this.getHead = function() {
-      return {x: body[0], y: body[1]};
+      return { x: body[0], y: body[1] };
    };
 
    this.isAt = function(x, y, includeHead) {
@@ -133,7 +139,7 @@ var Snake = function(x, y, width, height, maxSize) {
 
    this.grow = function() {
       if (size * 2 < body.length)
-        return size++;
+         return size++;
    };
 
    this.reset = function(x, y) {

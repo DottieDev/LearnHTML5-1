@@ -30,6 +30,17 @@ h1 {
    font-weight: 400;
 }
 
+/*FVGCC: added style for h2*/
+h2 {
+   text-align: center;
+   font-family: Geo, Arial;
+   font-size: 2em;
+   padding: 0;
+   margin: 10px 0;
+   color: magenta;
+   font-weight: 300;
+}
+
 #scores {
    width: 960px;
    margin: 20px auto;
