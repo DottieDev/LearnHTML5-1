@@ -11,7 +11,7 @@ var Renderer = function(canvas) {
 
    var getPosition = function(index) {
       return {
-         x: index % width, 
+         x: index % width,
          y: parseInt(index / width)
       };
    };
